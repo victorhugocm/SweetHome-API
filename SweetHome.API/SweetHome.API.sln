@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30320.27
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SweetHome.API", "SweetHome.API.csproj", "{7FA18975-2DB5-4ECF-BB0B-9BBD08AA391F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7FA18975-2DB5-4ECF-BB0B-9BBD08AA391F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7FA18975-2DB5-4ECF-BB0B-9BBD08AA391F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7FA18975-2DB5-4ECF-BB0B-9BBD08AA391F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7FA18975-2DB5-4ECF-BB0B-9BBD08AA391F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B21617B6-3766-40B9-8809-CB728ACEEC33}
+	EndGlobalSection
+EndGlobal
