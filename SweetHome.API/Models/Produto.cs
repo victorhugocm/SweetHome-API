@@ -5,6 +5,11 @@ namespace SweetHome.API.Models
 {
     public partial class Produto
     {
+        public Produto()
+        {
+            VendaProduto = new HashSet<VendaProduto>();
+        }
+
         public long Id { get; set; }
         public string Descricao { get; set; }
         public decimal Preco { get; set; }
@@ -13,5 +18,6 @@ namespace SweetHome.API.Models
 
         public virtual Cor Cor { get; set; }
         public virtual Tamanho Tamanho { get; set; }
+        public virtual ICollection<VendaProduto> VendaProduto { get; set; }
     }
 }

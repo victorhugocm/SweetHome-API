@@ -5,6 +5,7 @@ namespace SweetHome.API.Models
 {
     public partial class VendaProduto
     {
+        public long Id { get; set; }
         public long VendaId { get; set; }
         public long ProdutoId { get; set; }
         public long Quantidade { get; set; }

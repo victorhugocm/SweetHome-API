@@ -122,13 +122,13 @@ namespace SweetHome.API.Models
 
             modelBuilder.Entity<VendaProduto>(entity =>
             {
-                entity.HasNoKey();
-
                 entity.ToTable("venda_produto");
 
                 entity.HasIndex(e => new { e.ProdutoId, e.VendaId })
                     .HasName("UK_venda_produto")
                     .IsUnique();
+
+                entity.Property(e => e.Id).HasColumnName("id");
 
                 entity.Property(e => e.PrecoProduto)
                     .HasColumnName("preco_produto")
@@ -141,13 +141,13 @@ namespace SweetHome.API.Models
                 entity.Property(e => e.VendaId).HasColumnName("venda_id");
 
                 entity.HasOne(d => d.Produto)
-                    .WithMany()
+                    .WithMany(p => p.VendaProduto)
                     .HasForeignKey(d => d.ProdutoId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_produto");
 
                 entity.HasOne(d => d.Venda)
-                    .WithMany()
+                    .WithMany(p => p.VendaProduto)
                     .HasForeignKey(d => d.VendaId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_venda");
