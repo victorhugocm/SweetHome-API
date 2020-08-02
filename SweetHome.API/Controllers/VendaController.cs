@@ -20,15 +20,15 @@ namespace SweetHome.API.Controllers
             _context = context;
         }
 
-        // GET: api/Venda
-        [HttpGet]
+        // GET: api/Venda/Get
+        [HttpGet("Get")]
         public async Task<ActionResult<IEnumerable<Venda>>> GetVenda()
         {
             return await _context.Venda.ToListAsync();
         }
 
-        // GET: api/Venda/5
-        [HttpGet("{id}")]
+        // GET: api/Venda/GetById?id=long
+        [HttpGet("GetById")]
         public async Task<ActionResult<Venda>> GetVenda(long id)
         {
             var venda = await _context.Venda.FindAsync(id);
@@ -41,15 +41,15 @@ namespace SweetHome.API.Controllers
             return venda;
         }
 
-        // PUT: api/Venda/5
+        // PUT: api/Venda/Put
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutVenda(long id, Venda venda)
+        [HttpPut("Put")]
+        public async Task<IActionResult> PutVenda(Venda venda)
         {
-            if (id != venda.Id)
+            if (!VendaExists(venda.Id))
             {
-                return BadRequest();
+                return NotFound();
             }
 
             _context.Entry(venda).State = EntityState.Modified;
@@ -60,23 +60,16 @@ namespace SweetHome.API.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!VendaExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                throw;
             }
 
             return NoContent();
         }
 
-        // POST: api/Venda
+        // POST: api/Venda/Post
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
-        [HttpPost]
+        [HttpPost("Post")]
         public async Task<ActionResult<Venda>> PostVenda(Venda venda)
         {
             _context.Venda.Add(venda);
@@ -85,8 +78,8 @@ namespace SweetHome.API.Controllers
             return CreatedAtAction("GetVenda", new { id = venda.Id }, venda);
         }
 
-        // DELETE: api/Venda/5
-        [HttpDelete("{id}")]
+        // DELETE: api/Venda/Delete?id=long
+        [HttpDelete("Delete")]
         public async Task<ActionResult<Venda>> DeleteVenda(long id)
         {
             var venda = await _context.Venda.FindAsync(id);

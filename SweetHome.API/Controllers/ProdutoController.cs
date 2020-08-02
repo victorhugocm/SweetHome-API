@@ -20,15 +20,15 @@ namespace SweetHome.API.Controllers
             _context = context;
         }
 
-        // GET: api/Produto
-        [HttpGet]
+        // GET: api/Produto/Get
+        [HttpGet("Get")]
         public async Task<ActionResult<IEnumerable<Produto>>> GetProduto()
         {
             return await _context.Produto.ToListAsync();
         }
 
-        // GET: api/Produto/5
-        [HttpGet("{id}")]
+        // GET: api/Produto/GetById?id=long
+        [HttpGet("GetById")]
         public async Task<ActionResult<Produto>> GetProduto(long id)
         {
             var produto = await _context.Produto.FindAsync(id);
@@ -41,15 +41,15 @@ namespace SweetHome.API.Controllers
             return produto;
         }
 
-        // PUT: api/Produto/5
+        // PUT: api/Produto/Put
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutProduto(long id, Produto produto)
+        [HttpPut("Put")]
+        public async Task<IActionResult> PutProduto(Produto produto)
         {
-            if (id != produto.Id)
+            if (!ProdutoExists(produto.Id))
             {
-                return BadRequest();
+                return NotFound();
             }
 
             _context.Entry(produto).State = EntityState.Modified;
@@ -60,23 +60,16 @@ namespace SweetHome.API.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!ProdutoExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                throw;
             }
 
             return NoContent();
         }
 
-        // POST: api/Produto
+        // POST: api/Produto/Post
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
-        [HttpPost]
+        [HttpPost("Post")]
         public async Task<ActionResult<Produto>> PostProduto(Produto produto)
         {
             _context.Produto.Add(produto);
@@ -85,8 +78,8 @@ namespace SweetHome.API.Controllers
             return CreatedAtAction("GetProduto", new { id = produto.Id }, produto);
         }
 
-        // DELETE: api/Produto/5
-        [HttpDelete("{id}")]
+        // DELETE: api/Produto/Delete?id=long
+        [HttpDelete("Delete")]
         public async Task<ActionResult<Produto>> DeleteProduto(long id)
         {
             var produto = await _context.Produto.FindAsync(id);

@@ -20,15 +20,15 @@ namespace SweetHome.API.Controllers
             _context = context;
         }
 
-        // GET: api/Cor
-        [HttpGet]
+        // GET: api/Cor/Get
+        [HttpGet("Get")]
         public async Task<ActionResult<IEnumerable<Cor>>> GetCor()
         {
             return await _context.Cor.ToListAsync();
         }
 
-        // GET: api/Cor/5
-        [HttpGet("{id}")]
+        // GET: api/Cor/GetById?id=long
+        [HttpGet("GetById")]
         public async Task<ActionResult<Cor>> GetCor(long id)
         {
             var cor = await _context.Cor.FindAsync(id);
@@ -41,15 +41,15 @@ namespace SweetHome.API.Controllers
             return cor;
         }
 
-        // PUT: api/Cor/5
+        // PUT: api/Cor/Put
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutCor(long id, Cor cor)
+        [HttpPut("Put")]
+        public async Task<IActionResult> PutCor(Cor cor)
         {
-            if (id != cor.Id)
+            if (!CorExists(cor.Id))
             {
-                return BadRequest();
+                return NotFound();
             }
 
             _context.Entry(cor).State = EntityState.Modified;
@@ -60,23 +60,16 @@ namespace SweetHome.API.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!CorExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                throw;
             }
 
             return NoContent();
         }
 
-        // POST: api/Cor
+        // POST: api/Cor/Post
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
-        [HttpPost]
+        [HttpPost("Post")]
         public async Task<ActionResult<Cor>> PostCor(Cor cor)
         {
             _context.Cor.Add(cor);
@@ -85,8 +78,8 @@ namespace SweetHome.API.Controllers
             return CreatedAtAction("GetCor", new { id = cor.Id }, cor);
         }
 
-        // DELETE: api/Cor/5
-        [HttpDelete("{id}")]
+        // DELETE: api/Cor/Delete?id=long
+        [HttpDelete("Delete")]
         public async Task<ActionResult<Cor>> DeleteCor(long id)
         {
             var cor = await _context.Cor.FindAsync(id);

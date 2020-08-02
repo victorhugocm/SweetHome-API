@@ -20,15 +20,15 @@ namespace SweetHome.API.Controllers
             _context = context;
         }
 
-        // GET: api/Tamanho
-        [HttpGet]
+        // GET: api/Tamanho/Get
+        [HttpGet("Get")]
         public async Task<ActionResult<IEnumerable<Tamanho>>> GetTamanho()
         {
             return await _context.Tamanho.ToListAsync();
         }
 
-        // GET: api/Tamanho/5
-        [HttpGet("{id}")]
+        // GET: api/Tamanho/GetById?id=long
+        [HttpGet("GetById")]
         public async Task<ActionResult<Tamanho>> GetTamanho(long id)
         {
             var tamanho = await _context.Tamanho.FindAsync(id);
@@ -41,15 +41,15 @@ namespace SweetHome.API.Controllers
             return tamanho;
         }
 
-        // PUT: api/Tamanho/5
+        // PUT: api/Tamanho/Put
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutTamanho(long id, Tamanho tamanho)
+        [HttpPut("Put")]
+        public async Task<IActionResult> PutTamanho(Tamanho tamanho)
         {
-            if (id != tamanho.Id)
+            if (!TamanhoExists(tamanho.Id))
             {
-                return BadRequest();
+                return NotFound();
             }
 
             _context.Entry(tamanho).State = EntityState.Modified;
@@ -60,23 +60,16 @@ namespace SweetHome.API.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!TamanhoExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                throw;
             }
 
             return NoContent();
         }
 
-        // POST: api/Tamanho
+        // POST: api/Tamanho/Post
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
-        [HttpPost]
+        [HttpPost("Post")]
         public async Task<ActionResult<Tamanho>> PostTamanho(Tamanho tamanho)
         {
             _context.Tamanho.Add(tamanho);
@@ -85,8 +78,8 @@ namespace SweetHome.API.Controllers
             return CreatedAtAction("GetTamanho", new { id = tamanho.Id }, tamanho);
         }
 
-        // DELETE: api/Tamanho/5
-        [HttpDelete("{id}")]
+        // DELETE: api/Tamanho/Delete?id=long
+        [HttpDelete("Delete")]
         public async Task<ActionResult<Tamanho>> DeleteTamanho(long id)
         {
             var tamanho = await _context.Tamanho.FindAsync(id);

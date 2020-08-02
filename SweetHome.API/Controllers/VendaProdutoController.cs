@@ -20,15 +20,15 @@ namespace SweetHome.API.Controllers
             _context = context;
         }
 
-        // GET: api/VendaProduto
-        [HttpGet]
+        // GET: api/VendaProduto/Get
+        [HttpGet("Get")]
         public async Task<ActionResult<IEnumerable<VendaProduto>>> GetVendaProduto()
         {
             return await _context.VendaProduto.ToListAsync();
         }
 
-        // GET: api/VendaProduto/5
-        [HttpGet("{id}")]
+        // GET: api/VendaProduto/GetById?id=long
+        [HttpGet("GetById")]
         public async Task<ActionResult<VendaProduto>> GetVendaProduto(long id)
         {
             var vendaProduto = await _context.VendaProduto.FindAsync(id);
@@ -41,17 +41,17 @@ namespace SweetHome.API.Controllers
             return vendaProduto;
         }
 
-        // PUT: api/VendaProduto/5
+        // PUT: api/VendaProduto/Put
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutVendaProduto(long id, VendaProduto vendaProduto)
+        [HttpPut("Put")]
+        public async Task<IActionResult> PutVendaProduto(VendaProduto vendaProduto)
         {
-            if (id != vendaProduto.Id)
+            if (!VendaProdutoExists(vendaProduto.Id))
             {
-                return BadRequest();
+                return NotFound();
             }
-
+            
             _context.Entry(vendaProduto).State = EntityState.Modified;
 
             try
@@ -60,23 +60,16 @@ namespace SweetHome.API.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!VendaProdutoExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                throw;
             }
 
             return NoContent();
         }
 
-        // POST: api/VendaProduto
+        // POST: api/VendaProduto/Post
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
-        [HttpPost]
+        [HttpPost("Post")]
         public async Task<ActionResult<VendaProduto>> PostVendaProduto(VendaProduto vendaProduto)
         {
             _context.VendaProduto.Add(vendaProduto);
@@ -85,8 +78,8 @@ namespace SweetHome.API.Controllers
             return CreatedAtAction("GetVendaProduto", new { id = vendaProduto.Id }, vendaProduto);
         }
 
-        // DELETE: api/VendaProduto/5
-        [HttpDelete("{id}")]
+        // DELETE: api/VendaProduto/Delete?id=long
+        [HttpDelete("Delete")]
         public async Task<ActionResult<VendaProduto>> DeleteVendaProduto(long id)
         {
             var vendaProduto = await _context.VendaProduto.FindAsync(id);
