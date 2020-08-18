@@ -24,7 +24,17 @@ namespace SweetHome.API.Controllers
         [HttpGet("Get")]
         public async Task<ActionResult<IEnumerable<Venda>>> GetVenda()
         {
-            return await _context.Venda.ToListAsync();
+            var listVenda = await _context.Venda.ToListAsync();
+
+            if (listVenda.Any())
+            {
+                foreach (var item in listVenda)
+                {
+                    item.Vendedor = await _context.Vendedor.FindAsync(item.VendedorId);
+                }
+            }
+
+            return listVenda;
         }
 
         // GET: api/Venda/GetById?id=long
@@ -36,6 +46,10 @@ namespace SweetHome.API.Controllers
             if (venda == null)
             {
                 return NotFound();
+            }
+            else 
+            {
+                venda.Vendedor = await _context.Vendedor.FindAsync(venda.VendedorId);
             }
 
             return venda;
