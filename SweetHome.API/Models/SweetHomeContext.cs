@@ -69,18 +69,6 @@ namespace SweetHome.API.Models
                     .HasColumnType("decimal(9, 2)");
 
                 entity.Property(e => e.TamanhoId).HasColumnName("tamanho_id");
-
-                entity.HasOne(d => d.Cor)
-                    .WithMany(p => p.Produto)
-                    .HasForeignKey(d => d.CorId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_cor_produto");
-
-                entity.HasOne(d => d.Tamanho)
-                    .WithMany(p => p.Produto)
-                    .HasForeignKey(d => d.TamanhoId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_tamanho_produto");
             });
 
             modelBuilder.Entity<Tamanho>(entity =>
@@ -112,12 +100,6 @@ namespace SweetHome.API.Models
                     .HasColumnType("decimal(9, 2)");
 
                 entity.Property(e => e.VendedorId).HasColumnName("vendedor_id");
-
-                entity.HasOne(d => d.Vendedor)
-                    .WithMany(p => p.Venda)
-                    .HasForeignKey(d => d.VendedorId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_venda_vendedor");
             });
 
             modelBuilder.Entity<VendaProduto>(entity =>
@@ -139,18 +121,6 @@ namespace SweetHome.API.Models
                 entity.Property(e => e.Quantidade).HasColumnName("quantidade");
 
                 entity.Property(e => e.VendaId).HasColumnName("venda_id");
-
-                entity.HasOne(d => d.Produto)
-                    .WithMany(p => p.VendaProduto)
-                    .HasForeignKey(d => d.ProdutoId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_produto");
-
-                entity.HasOne(d => d.Venda)
-                    .WithMany(p => p.VendaProduto)
-                    .HasForeignKey(d => d.VendaId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_venda");
             });
 
             modelBuilder.Entity<Vendedor>(entity =>

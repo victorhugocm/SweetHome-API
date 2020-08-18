@@ -5,14 +5,9 @@ namespace SweetHome.API.Models
 {
     public partial class Cor
     {
-        public Cor()
-        {
-            Produto = new HashSet<Produto>();
-        }
+        public Cor() { }
 
         public long Id { get; set; }
         public string Descricao { get; set; }
-
-        public virtual ICollection<Produto> Produto { get; set; }
     }
 }
