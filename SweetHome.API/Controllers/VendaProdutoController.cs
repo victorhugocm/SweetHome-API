@@ -30,8 +30,14 @@ namespace SweetHome.API.Controllers
             {
                 foreach (var item in listVendaProduto)
                 {
+                    //Produto
                     item.Produto = await _context.Produto.FindAsync(item.ProdutoId);
+                    item.Produto.Cor = await _context.Cor.FindAsync(item.Produto.CorId);
+                    item.Produto.Tamanho = await _context.Tamanho.FindAsync(item.Produto.TamanhoId);
+
+                    //Venda
                     item.Venda = await _context.Venda.FindAsync(item.VendaId);
+                    item.Venda.Vendedor = await _context.Vendedor.FindAsync(item.Venda.VendedorId);
                 }
             }
 
@@ -50,8 +56,14 @@ namespace SweetHome.API.Controllers
             }
             else 
             {
+                //Produto
                 vendaProduto.Produto = await _context.Produto.FindAsync(vendaProduto.ProdutoId);
+                vendaProduto.Produto.Cor = await _context.Cor.FindAsync(vendaProduto.Produto.CorId);
+                vendaProduto.Produto.Tamanho = await _context.Tamanho.FindAsync(vendaProduto.Produto.TamanhoId);
+
+                //Venda
                 vendaProduto.Venda = await _context.Venda.FindAsync(vendaProduto.VendaId);
+                vendaProduto.Venda.Vendedor = await _context.Vendedor.FindAsync(vendaProduto.Venda.VendedorId);
             }
 
             return vendaProduto;
